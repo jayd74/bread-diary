@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import DiaryEntry from './diaryEntry';
+import DiaryInput from './diaryInput';
 
 // create a diary to store information about bread
 // require authentication to store information
@@ -22,43 +23,62 @@ class App extends React.Component {
     constructor() {
       super()
       this.state = {
-        user: null,
+          user: null,
           breadEntries:[],
           name: '',
           date: '',
-          consistency: '',
-          description: ''
+          instructions: '',
+          description: '',
+          newEntry: false,
+          deleted: false
       }
       this.onChange = this.onChange.bind(this);
       this.addEntry = this.addEntry.bind(this);
+      this.deleteEntry = this.deleteEntry.bind(this);
+      this.newEntry = this.newEntry.bind(this);
+      this.closeEntry = this.closeEntry.bind(this);
     }
     onChange(e){
       this.setState({
           [e.target.id]: e.target.value
       })
     }
-  // addEntry(e) {
-  //   let breadEntriesState = this.state.breadEntries[e.target.id];
-  //   console.log(breadEntriesState)
-  // }
+    newEntry() {
+      this.setState({
+        newEntry: true
+      })
+    }
+    closeEntry(){
+      this.setState({
+        newEntry: false
+      })
+    }
+    addInstruction() {
+    console.log('click')
+    }
     addEntry(e) {
       e.preventDefault();
       const entry = {
         name: this.state.name,
         date: this.state.date,
-        consistency: this.state.consistency,
+        instructions: this.state.instructions,
         description: this.state.description
       }
-
       const dbref = firebase.database().ref(`bread-entries/`);  
       dbref.push(entry)
       
       this.setState({
         name: '',
         date: '',
-        consistency: '',
+        instructions: '',
         description: ''
       })
+    }
+    deleteEntry(entryKey){
+      let entryDelete = this.state.breadEntries.find((entry) => {
+        return entry.key === entryKey
+      });
+      const dbRef = firebase.database().ref(`/bread-entries/${entryKey}`).remove();
     }
     componentDidMount(){
       const dbRef = firebase.database().ref(`/bread-entries/`);
@@ -77,24 +97,25 @@ class App extends React.Component {
     render() {
       return (
         <Fragment>
-            <form onSubmit={this.addEntry}>
-              <h3>Nick Name</h3>
-              <input type="text" id="name" onChange={this.onChange} value={this.state.name}/>
-              <h3>Date</h3>
-              <input type="date" id="date" onChange={this.onChange} value={this.state.date}/>
-              <h3>consistency</h3>
-              <input type="text" id="consistency" onChange={this.onChange} value={this.state.consistency}/>
-              <h3>description</h3>
-              <input type="text" id="description" onChange={this.onChange} value={this.state.description}/>
-              <button type="submit">Submit</button>
-            </form>
-        
-        {this.state.breadEntries.map((entry) => {
-          return (
-            <DiaryEntry data={entry} key={entry.key}/>
-          )
-        }
-        )}
+           
+         {this.state.newEntry === false ? 
+          <button onClick={this.newEntry}>Add Entry</button>
+        : 
+          <button onClick={this.closeEntry}>Close</button>
+         }
+
+        {this.state.newEntry === true ? 
+          <DiaryInput onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction}/> 
+        : null} 
+         
+        <div className="diary-container">
+          {this.state.breadEntries.map((entry) => {
+              return (
+                <DiaryEntry data={entry} key={entry.key} deleteEntry={this.deleteEntry} />
+             )
+            }
+          )}
+        </div>
         </Fragment>
       )
     }

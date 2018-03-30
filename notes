@@ -1,0 +1,21 @@
+INGREDIENTS
+- ingredient dont change. but quantity might.
+
+INSTRUCTIONS
+- instructions may change slightly
+- time changes
+- have individual input fields for each instruction and time
+- method changes
+- 
+
+
+RETROSPECTIVE
+- huge text box
+
+
+APP
+- display entries
+- on click of + button open fields of diary input (new componenent)
+
+DiaryEntry
+- need to map the instructions
