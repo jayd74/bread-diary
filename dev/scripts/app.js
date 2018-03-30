@@ -31,12 +31,56 @@ class App extends React.Component {
           instructions: '',
           description: '',
           newEntry: false,
+          loggedIn: false
       }
       this.onChange = this.onChange.bind(this);
       this.addEntry = this.addEntry.bind(this);
       this.deleteEntry = this.deleteEntry.bind(this);
       this.newEntry = this.newEntry.bind(this);
       this.closeEntry = this.closeEntry.bind(this);
+      this.googleSignIn = this.googleSignIn.bind(this);
+      this.signOut = this.signOut.bind(this);
+    }
+    googleSignIn(){
+      var provider = new firebase.auth.GoogleAuthProvider();
+
+      firebase.auth().signInWithPopup(provider).then(function (result) {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        var token = result.credential.accessToken;
+        // The signed-in user info.
+        var user = result.user;
+        // ...
+      }).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
+      this.setState({
+        loggedIn: true
+      })
+    }
+    guestSignIn(){
+      firebase.auth().signInAnonymously().catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+      });
+    }
+    signOut(){
+      firebase.auth().signOut().then(function () {
+        // Sign-out successful.
+      }).catch(function (error) {
+        // An error happened.
+      });
+      this.setState({
+        loggedIn: false
+      })
     }
     onChange(e){
       this.setState({
@@ -56,13 +100,16 @@ class App extends React.Component {
     
     addEntry(e) {
       e.preventDefault();
+      
+      let userID = this.state.user
+
       const entry = {
         name: this.state.name,
         date: this.state.date,
         instructions: this.state.instructions,
         description: this.state.description
       }
-      const dbref = firebase.database().ref(`bread-entries/`);  
+      const dbref = firebase.database().ref(`/users/${userID}/bread-entries/`);  
       dbref.push(entry)
       
       this.setState({
@@ -73,29 +120,53 @@ class App extends React.Component {
       })
     }
     deleteEntry(entryKey){
+      let userID = this.state.user
+
       let entryDelete = this.state.breadEntries.find((entry) => {
         return entry.key === entryKey
       });
-      const dbRef = firebase.database().ref(`/bread-entries/${entryKey}`).remove();
+      const dbRef = firebase.database().ref(`/users/${userID}/bread-entries/${entryKey}`).remove();
     }
     componentDidMount(){
-      const dbRef = firebase.database().ref(`/bread-entries/`);
-      dbRef.on('value', (entries) => {
-        const data = entries.val();
-        const state = [];
-        for (let key in data) {
-          data[key].key = key;
-          state.push(data[key])
-        }
-          this.setState({
-            breadEntries: state
-         })
-      })
+
+          firebase.auth().onAuthStateChanged((user) => {
+              if (user) {
+                this.setState({
+                  loggedIn: true,
+                  user: user.uid,
+                  userName: user.displayName
+                })
+
+                let userID = this.state.user
+
+                const dbRef = firebase.database().ref(`/users/${userID}/bread-entries/`);
+                dbRef.on('value', (entries) => {
+                  const data = entries.val();
+                  const state = [];
+                  for (let key in data) {
+                    data[key].key = key;
+                    state.push(data[key])
+                  }
+                  this.setState({
+                    breadEntries: state
+                  })
+                })
+              }
+          })
     }
     render() {
       return (
         <Fragment>
-           
+
+          <div className="sign-in-btn">
+            <button className="sign-in-out" onClick={this.guestSignIn}>Sign In As Guest</button>
+            <button className="sign-in-out" onClick={this.state.loggedIn ? this.signOut : this.googleSignIn}>
+              {this.state.loggedIn ? <div><p>Sign Out {this.state.userName}</p></div> : <div><span><i className="fab fa-google"></i></span>Sign In</div>}
+            </button>
+          </div>
+
+        
+        <div className={this.state.loggedIn ? "bread-diary-account" : "guest-account"}>
          {this.state.newEntry === false ? 
           <button onClick={this.newEntry}>Add Entry</button>
         : 
@@ -114,6 +185,7 @@ class App extends React.Component {
             }
           )}
         </div>
+        </div> {/* end bread-diary-account div */}
         </Fragment>
       )
     }
