@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import DiaryEntry from './diaryEntry';
 import DiaryInput from './diaryInput';
+import InputField from './inputField';
 
 // create a diary to store information about bread
 // require authentication to store information
@@ -30,7 +31,6 @@ class App extends React.Component {
           instructions: '',
           description: '',
           newEntry: false,
-          deleted: false
       }
       this.onChange = this.onChange.bind(this);
       this.addEntry = this.addEntry.bind(this);
@@ -53,9 +53,7 @@ class App extends React.Component {
         newEntry: false
       })
     }
-    addInstruction() {
-    console.log('click')
-    }
+    
     addEntry(e) {
       e.preventDefault();
       const entry = {
@@ -105,7 +103,7 @@ class App extends React.Component {
          }
 
         {this.state.newEntry === true ? 
-          <DiaryInput onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction}/> 
+          <DiaryInput data={this.state} onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction} /> 
         : null} 
          
         <div className="diary-container">

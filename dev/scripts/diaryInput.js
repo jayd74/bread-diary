@@ -1,19 +1,20 @@
 import React from 'react'
 
 const DiaryInput = (props) => {
+        console.log(props)
         return (
             <form onSubmit={props.onSubmit}>
                 <h3>Nick Name</h3>
-                <input type="text" id="name" onChange={props.onChange} value={props.name} />
+                <input type="text" id="name" onChange={props.onChange} value={props.data.name} />
                 <h3>Date</h3>
-                <input type="date" id="date" onChange={props.onChange} value={props.date} />
+                <input type="date" id="date" onChange={props.onChange} value={props.data.date} />
                 <h3>instructions</h3>
-                <input type="text" id="instructions" onChange={props.onChange} value={props.instructions} />
-                <button onClick={props.addInstruction}>Add Instructions</button>
+                <textarea type="text" id="instructions" onChange={props.onChange} value={props.data.instructions} />
+                {/* <input type="button" onClick={props.addInstruction} value="Add Instruction"/> */}
                 <h3>time</h3>
-                <input type="text" id="instructions" onChange={props.onChange} value={props.instructions} />
-                <h3>description</h3>
-                <input type="text" id="description" onChange={props.onChange} value={props.description} />
+                <input type="time" id="instructions" onChange={props.onChange} value={props.data.instructions} />
+                <h3>Retrospective</h3>
+                <textarea type="text" id="description" onChange={props.onChange} value={props.data.description} />
                 <button type="submit">Submit</button>
         </form>
         )
