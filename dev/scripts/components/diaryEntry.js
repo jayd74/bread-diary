@@ -44,6 +44,10 @@ const DiaryEntry = (props) => {
             <p className="pre-line">{props.data.retrospective}</p>
           </div>
         </div>
+        
+        <button onClick={() => props.deleteEntry(props.data.key)} id={props.data.key}>
+          DELETE
+        </button>
       </div>;
 }
 

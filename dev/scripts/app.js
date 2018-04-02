@@ -136,13 +136,14 @@ class App extends React.Component {
       dbref.push(entry)
       
       this.setState({
-        leaven: '',
-        dough: '',
-        prepdate: '',
-        bakedate: '',
-        instructions: '',
-        retrospective: '',
-      })
+        leaven: "",
+        dough: "",
+        prepdate: "",
+        bakedate: "",
+        instructions: "",
+        retrospective: "",
+        newEntry: false 
+      });
     }
     // imgUpload(imgfile){
     //   this.setState({
@@ -156,6 +157,9 @@ class App extends React.Component {
         return entry.key === entryKey
       });
       const dbRef = firebase.database().ref(`/users/${userID}/bread-entries/${entryKey}`).remove();
+      this.setState({
+        showDiaryEntry: false
+      })
     }
     componentDidMount(){
           firebase.auth().onAuthStateChanged((user) => {
@@ -187,8 +191,8 @@ class App extends React.Component {
       return (
         <Fragment>
           <div className="wrapper">
-            <h1>Bread Diary</h1>
-            <div className="sign-in-btn">
+            <h1>Loaf Notes</h1>
+            <div className={this.state.loggedIn ? "sign-out-btn" : "sign-in-btn"}>
               <button className={this.state.loggedIn ? "hide" : "sign-in-out"} onClick={this.guestSignIn}>Sign In As Guest</button>
               <button className="sign-in-out" onClick={this.state.loggedIn ? this.signOut : this.googleSignIn}>
               {this.state.loggedIn ? <div><p>Sign Out {this.state.userName}</p></div> : <div><span><i className="fab fa-google"></i></span>Sign In</div>}
@@ -196,14 +200,29 @@ class App extends React.Component {
             </div>
 
           <div className={this.state.loggedIn ? "hide" : "intro"}>
-            <blockquote>Keep track of the bread that you make and track each loaf</blockquote>
+            <h2>Welcome to Loaf Notes!</h2>
+            <p>An online diary to keep track of the delicious loaves of bread that you make! List all the ingredient and steps used for each loaf so you can reflect on what to improve on, and log when you've baked the perfect loaf.</p>
+            <div className="breadimg">
+              <img src="public/images/bread.jpeg" alt="loaf of sourdough bread"/>
+              <p>Sourdough Bread Jan 21, 2018</p>
+            </div>
           </div>
         
           <div className={this.state.loggedIn ? "bread-diary-account" : "hide"}>
          
             <div className="diary-container">
+              {this.state.newEntry === false ?
+                <div className={this.state.showDiaryEntry === true ? "hide" : "diary-tile"}>
+                  <button onClick={this.newEntry} className="diary-tile-add"><i className="fas fa-plus-circle"></i></button>        
+                </div>
+                : 
+                null
+              } 
               {this.state.showDiaryEntry === true ? 
                   <DiaryEntry data={this.state.entryToShow} key={this.state.breadEntries.key} deleteEntry={this.deleteEntry} showEntry={this.showEntry} hideEntry={this.hideEntry}/>
+                :
+                this.state.newEntry === true ? 
+                <DiaryInput data={this.state} onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction} closeEntry={this.closeEntry}/> 
                 :
                 this.state.breadEntries.map((entry, i) => {
                 return (
@@ -212,17 +231,14 @@ class App extends React.Component {
                 })
               } 
 
-              {this.state.newEntry === true ? 
-                <DiaryInput data={this.state} onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction} closeEntry={this.closeEntry}/> 
-                : 
-                <div className={this.state.showDiaryEntry === true ? "hide" : "diary-tile"}>
-                  <button onClick={this.newEntry} className="diary-tile-add"><i className="fas fa-plus-circle"></i></button>        
-                </div>
-              } 
+              
          
             </div> {/* end diary-container */}
           </div> {/* end bread-diary-account div */}
         </div> {/* end wrapper */}
+        <footer>
+              <p>Project By <a href="http://jasondu.ca">Jason Du</a></p>
+        </footer>
         </Fragment>
       )
     }

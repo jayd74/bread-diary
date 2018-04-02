@@ -27,6 +27,23 @@
     //     border-radius: 100%;
     //     line-height: 0;
     // }
+    button:hover {
+        @include tile(1.6rem);
+        border: solid 0.3rem;
+        border-radius: 0.5rem;
+        transition: 0.1s;
+        text-transform: uppercase;
+    }
+    button{
+        transition: 0.1s;
+        background: $tile-fontcolor;
+        color: $tile-bgcolor;
+        border: solid 0.3rem $tile-fontcolor;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+        float: right;
+        margin: 1rem;
+    }
 }
 
 .diaryEntry-header, .diaryEntry-section-small, .diaryEntry-section-large{
@@ -44,6 +61,7 @@
         display: flex;
         border-left: solid thick;
         padding: 1rem;
+        min-width: 20%;
     }
     .diaryEntry-item:first-child {
         border:none;
@@ -58,11 +76,12 @@
 }
 
 .diaryEntry-section-large p, .diaryEntry-section-small p{
-    background: url('../../../images/entry-bg.svg');
+    background: url('../images/entry-bg.svg');
+    min-height: 10rem;
+    width: 100%;
 }
 
 .diaryEntry-section-small {
-    
     .diaryEntry-item{
         width: 50%;
         margin: 1rem;
@@ -71,6 +90,9 @@
 
 .diaryEntry-section-large {
     margin: 5rem 1rem;
+    .diaryEntry-item{
+        width: 100%;
+    }
 }
 .pre-line {
     white-space: pre-line;

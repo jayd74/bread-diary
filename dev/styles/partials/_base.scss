@@ -28,14 +28,59 @@ h1{
         p {
             margin: 0;
         }
+        .fa-google {
+            margin-right: 0.5rem;
+        }
+    }
+}
+
+.sign-out-btn {
+    text-align: right;
+    // margin-right: 6rem;
+    button {
+        @include tile(1.6rem);
+        position: absolute;
+        top: 2rem;
+        right: 0;
+        margin: 1rem;
     }
 }
 
 .intro {
     @include tile(1.6rem);
-    margin-top: 2rem;
+    margin: 2rem auto;
+    width: 70%;
+    text-align: center;
+    p {
+        width: 75%;
+        margin: 0 auto;
+    }
+    .breadimg {
+        background: white;
+        width: 40%;
+        padding: 2rem;
+        margin: 5rem auto;
+        box-shadow: 1px 1px 3px 1px lightgrey;
+        transform: rotate(2deg);
+    }
+    img {
+        width: 100%;
+    }
+    caption {
+        text-align: center;
+        margin: 0 auto;
+    }
 }
 
 .hide {
     display: none;
+}
+
+footer {
+    color: white;
+    text-align: center;
+    a {
+        color: white;
+        text-decoration: none;
+    }
 }

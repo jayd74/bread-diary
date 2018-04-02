@@ -5,18 +5,22 @@
 .diary-container {
     max-width: 100%;
     display: flex;
+    justify-content: space-around;
+    // align-content: space-around;
     flex-wrap: wrap;
 }
 .diary-tile {
     @include tile(1.6rem);
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     vertical-align: text-top;
-    padding: 10px;
-    margin: 10px;
-    width: 20%;
+    padding: 2rem;
+    margin: 3rem;
+    width: 15%;
     text-align: center;
     h3 {
-        margin-top: 1rem;
+        margin-top: 0rem;
     }
     input:hover {
         @include tile(1.6rem);
@@ -36,10 +40,11 @@
     button {
         border: none;
         background: none;
+        margin: 1.3rem;
     }
     .fa-plus-circle {
         font-size: 5rem;
         color: $tile-fontcolor;
-        margin: 4rem;
     }
 }
+
