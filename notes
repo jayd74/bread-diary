@@ -8,10 +8,8 @@ INSTRUCTIONS
 - method changes
 - 
 
-
 RETROSPECTIVE
 - huge text box
-
 
 APP
 - display entries
@@ -19,3 +17,8 @@ APP
 
 DiaryEntry
 - need to map the instructions
+
+V2.0
+- picture upload {add pin to div for decoration}
+- edit mode 
+- create account using email/password
