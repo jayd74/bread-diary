@@ -1,24 +1,11 @@
+@import 'partials/reset';
+@import 'partials/base';
+@import 'partials/variables';
+@import 'partials/diaryEntry';
+@import 'partials/diaryInput';
+@import 'partials/diaryTile';
 
-.diary-container {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row-reverse;
-}
-.diary-entry {
-    border: solid black;
-    width: 200px;
-    height: 300px;
-    display: inline-block;
-    vertical-align: text-top;
-    margin: 20px;
-    padding: 10px;
-}
 
-#instructions {
-    white-space: pre-line;
-}
 
-.guest-account {
-    display: none;
-}
+
+

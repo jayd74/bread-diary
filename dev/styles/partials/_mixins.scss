@@ -1,0 +1,7 @@
+@mixin tile($font-size) {
+    font-size: $font-size;
+    background: $tile-bgcolor;
+    color: $tile-fontcolor;
+    border: solid thick $tile-fontcolor;
+    border-radius: 1rem;
+}

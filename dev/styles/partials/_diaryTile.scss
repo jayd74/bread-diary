@@ -1,0 +1,45 @@
+@import 'variables';
+@import 'mixins';
+
+
+.diary-container {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.diary-tile {
+    @include tile(1.6rem);
+    display: inline-block;
+    vertical-align: text-top;
+    padding: 10px;
+    margin: 10px;
+    width: 20%;
+    text-align: center;
+    h3 {
+        margin-top: 1rem;
+    }
+    input:hover {
+        @include tile(1.6rem);
+        border: solid 0.3rem;
+        border-radius: 0.5rem;
+        transition: 0.1s;
+        text-transform: uppercase;
+    }
+    input{
+        transition: 0.1s;
+        background: $tile-fontcolor;
+        color: $tile-bgcolor;
+        border: solid 0.3rem $tile-fontcolor;
+        border-radius: 0.5rem;
+        text-transform: uppercase;
+    }
+    button {
+        border: none;
+        background: none;
+    }
+    .fa-plus-circle {
+        font-size: 5rem;
+        color: $tile-fontcolor;
+        margin: 4rem;
+    }
+}
