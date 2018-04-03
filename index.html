@@ -4,16 +4,25 @@
 	<meta charset="UTF-8">
 	<title>🍞 Loaf Notes</title>
 	<link href="https://fonts.googleapis.com/css?family=Montserrat:500,500i,700,700i,900" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="/public/styles/style.css">
+	<link rel="stylesheet" type="text/css" href="public/styles/style.css">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl"
 	 crossorigin="anonymous"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-116624891-1"></script>
+
 </head>
 <body>
 	<div id="app">
 		test
 	</div>
 	<script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
-	<script src="/public/scripts/app.js"></script>
+	<script src="public/scripts/app.js"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-116624891-1');
+	</script>
 </body>
 </html>
