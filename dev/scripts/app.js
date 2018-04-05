@@ -48,11 +48,9 @@ class App extends React.Component {
       this.closeEntry = this.closeEntry.bind(this);
       this.googleSignIn = this.googleSignIn.bind(this);
       this.signOut = this.signOut.bind(this);
-      // this.imgUpload = this.imgUpload.bind(this);
     }
     googleSignIn(){
       var provider = new firebase.auth.GoogleAuthProvider();
-
       firebase.auth().signInWithPopup(provider).then(function (result) {
         // This gives you a Google Access Token. You can use it to access the Google API.
         var token = result.credential.accessToken;
@@ -114,7 +112,6 @@ class App extends React.Component {
       console.log(this.state.breadEntries[i])
     }
     hideEntry(){
-      console.log('hide')
       this.setState({
         showDiaryEntry: false
       })
@@ -145,11 +142,6 @@ class App extends React.Component {
         newEntry: false 
       });
     }
-    // imgUpload(imgfile){
-    //   this.setState({
-    //     image: imgfile,
-    //   })
-    // }
     deleteEntry(entryKey){
       let userID = this.state.user
 
@@ -169,9 +161,7 @@ class App extends React.Component {
                   user: user.uid,
                   userName: user.displayName
                 })
-
                 let userID = this.state.user
-
                 const dbRef = firebase.database().ref(`/users/${userID}/bread-entries/`);
                 dbRef.on('value', (entries) => {
                   const data = entries.val();
@@ -209,35 +199,47 @@ class App extends React.Component {
           </div>
         
           <div className={this.state.loggedIn ? "bread-diary-account" : "hide"}>
-         
             <div className="diary-container">
               {this.state.newEntry === false ?
-                <div className={this.state.showDiaryEntry === true ? "hide" : "diary-tile"}>
-                  <button onClick={this.newEntry} className="diary-tile-add"><i className="fas fa-plus-circle"></i></button>        
-                </div>
+                  <div className={this.state.showDiaryEntry === true ? "hide" : "diary-tile"}>
+                    <button onClick={this.newEntry} className="diary-tile-add">
+                      <i className="fas fa-plus-circle"></i>
+                    </button>        
+                  </div>
                 : 
-                null
+                  null  
               } 
               {this.state.showDiaryEntry === true ? 
-                  <DiaryEntry data={this.state.entryToShow} key={this.state.breadEntries.key} deleteEntry={this.deleteEntry} showEntry={this.showEntry} hideEntry={this.hideEntry}/>
+                  <DiaryEntry 
+                    data={this.state.entryToShow}  
+                    key={this.state.breadEntries.key} 
+                    deleteEntry={this.deleteEntry} 
+                    showEntry={this.showEntry} 
+                    hideEntry={this.hideEntry} />
                 :
-                this.state.newEntry === true ? 
-                <DiaryInput data={this.state} onChange={this.onChange} onSubmit={this.addEntry} addInstruction={this.addInstruction} closeEntry={this.closeEntry}/> 
+                  this.state.newEntry === true ? 
+                  <DiaryInput 
+                    data={this.state} 
+                    onChange={this.onChange} 
+                    onSubmit={this.addEntry} 
+                    addInstruction={this.addInstruction} 
+                    closeEntry={this.closeEntry} /> 
                 :
-                this.state.breadEntries.map((entry, i) => {
-                return (
-                  <DiaryTile data={entry} key={entry.key} deleteEntry={this.deleteEntry} showEntry={(e) => this.showEntry(e, i)} />
-                )
-                })
+                  this.state.breadEntries.map((entry, i) => {
+                    return (
+                      <DiaryTile 
+                        data={entry} 
+                        key={entry.key} 
+                        deleteEntry={this.deleteEntry} 
+                        showEntry={(e) => this.showEntry(e, i)} />
+                    )
+                  })
               } 
-
-              
-         
             </div> {/* end diary-container */}
           </div> {/* end bread-diary-account div */}
         </div> {/* end wrapper */}
         <footer>
-              <p>Project By <a href="http://jasondu.ca">Jason Du</a></p>
+              <p>Project By <a href="https://jasondu.ca">Jason Du</a></p>
         </footer>
         </Fragment>
       )

@@ -2,7 +2,7 @@ import React from 'react'
 
 
 const DiaryEntry = (props) => {
-    console.log(props)
+    // console.log(props)
     return <div className="diary-entry">
         <label htmlFor="diaryEntry-close">
           <i className="fas fa-times-circle" />
