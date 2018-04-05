@@ -6,7 +6,8 @@ const DiaryInput = (props) => {
             <div className="diary-entry">
                 <form onSubmit={props.onSubmit}>
                     <label htmlFor="diaryInput-close"><i className="fas fa-times-circle"></i></label>
-                    <input type="button" id="diaryInput-close" onChange={props.onChange} onClick={props.closeEntry} />                    
+                    <input type="button" id="diaryInput-close" onChange={props.onChange} onClick={props.closeEntry} />   
+                                     
                     <div className="diaryEntry-header">
                         <div className="diaryEntry-item" id="sourdough-heading">
                             <h3>Sourdough</h3>
@@ -39,20 +40,17 @@ const DiaryInput = (props) => {
                     <div className="diaryEntry-section-large">
                         <div className="diaryEntry-item diaryInput-item">
                             <h3>instructions</h3>
-                        </div>
-                        <div> */}
                             <textarea type="text" id="instructions" onChange={props.onChange} value={props.data.instructions} placeholder="Steps you took to make the bread"/>
                         </div>
                     </div>
                 
                     <div className="diaryEntry-section-large">
                         <div className="diaryEntry-item diaryInput-item">
-                            <h3>Retrospective *</h3>
-                            <textarea type="text" id="retrospective" onChange={props.onChange} value={props.data.retrospective} required placeholder="How did it turn out?"/>
+                            <h3>Retrospective</h3>
+                            <textarea type="text" id="retrospective" onChange={props.onChange} value={props.data.retrospective} placeholder="How did it turn out?"/>
                         </div>
                     </div>
 
-                    {/* <input type="file" name="image" id="image" imgUpload={props.imgUpload}/> */}
                 <button type="submit">Save</button>
                 </form>
                 
