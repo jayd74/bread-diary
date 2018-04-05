@@ -109,7 +109,6 @@ class App extends React.Component {
         showDiaryEntry: true,
         entryToShow: this.state.breadEntries[i]
       })
-      console.log(this.state.breadEntries[i])
     }
     hideEntry(){
       this.setState({

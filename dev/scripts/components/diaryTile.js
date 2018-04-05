@@ -2,7 +2,6 @@ import React from 'react'
 
 
 const DiaryTile = (props) => {
-    console.log(props.data)
     return (
         <div className="diary-tile">
             <h3>Sourdough #{props.data.count}</h3>
